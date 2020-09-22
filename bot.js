@@ -34,9 +34,8 @@ function onScan(qrcode, status) {
  * @returns {Promise<void>}
  */
 async function onMsg(msg) {
-    const room = msg.room()
     //收到好友消息，自动回复
-    if (!room && !msg.self() && msg.from().type() === Contact.Type.Individual) {
+    if (!msg.room() && !msg.self() && msg.from().type() === Contact.Type.Individual) {
         await msg.say(`本消息为自动回复 1、拼多多没办法有偿助力；2、可以有偿助力的有：淘宝京东领券，可以在淘宝可以上找客服回复"淘宝京东有偿助力"；3、店铺：克瑞斯的云上杂货铺`)
     }
 }
@@ -54,7 +53,7 @@ async function onFriendship(friendship) {
         const contact = await bot.Contact.find({
             id: friendship.contact().id
         })
-        //定义一个群聊ID
+        //群ID
         let roomId = "22178701187@chatroom"
         //查询群
         const room = await bot.Room.find({
